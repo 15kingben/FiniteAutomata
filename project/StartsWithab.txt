@@ -1,0 +1,4 @@
+3
+0 Accepting 0 Lambda -1 Transitions a 1
+1 Accepting 0 Lambda -1 Transitions b 2
+2 Accepting 1 Lambda 2 Transitions
