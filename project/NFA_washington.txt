@@ -1,0 +1,21 @@
+20
+0 Accepting 0 Lambda 0 n 1 w 4 a 6 s 8 h 10 i 12 g 14 t 16 o 18
+1 Accepting 0 Lambda 1 n 2
+2 Accepting 0 Lambda 2 n 3
+3 Accepting 1 Lambda 3
+4 Accepting 0 Lambda 4 w 5
+5 Accepting 1 Lambda 5
+6 Accepting 0 Lambda 6 a 7
+7 Accepting 1 Lambda 7
+8 Accepting 0 Lambda 8 s 9
+9 Accepting 1 Lambda 9
+10 Accepting 0 Lambda 10 h 11
+11 Accepting 1 Lambda 11
+12 Accepting 0 Lambda 12 i 13
+13 Accepting 1 Lambda 13
+14 Accepting 0 Lambda 14 g 15
+15 Accepting 1 Lambda 15
+16 Accepting 0 Lambda 16 t 17
+17 Accepting 1 Lambda 17
+18 Accepting 0 Lambda 18 o 19
+19 Accepting 1 Lambda 19

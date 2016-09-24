@@ -1,4 +1,3 @@
-
 #include "IntSet.h"
 #include "headers.h"
 #include "nfa.h"
@@ -213,7 +212,7 @@ void addToNextStates(int state){
   IntSet_union(globalNextStates, globalNFA->states[state].transitions[globalNextSymbol]);
 }
 
-bool NFA_Execute(NFA* nfa, char *input){
+bool NFA_execute(NFA* nfa, char *input){
   globalNFA = nfa;
   for (int i = 0; i < strlen(input); i++){
     globalNextSymbol = input[i];
@@ -234,22 +233,4 @@ bool NFA_Execute(NFA* nfa, char *input){
   }
 
   return NFA_is_accepting(nfa);
-}
-
-
-
-int main(int argc, char** argv){
-
-  char* filename = argv[1];
-  NFA* nfa = NFA_from_file(filename);
-  NFA_print(nfa);
-  bool result = NFA_Execute(nfa, argv[2]);
-
-  if(result){
-    printf("\naccept input \"%s\"\n", argv[2]);
-  }else{
-    printf("\nreject input \"%s\"\n", argv[2]);
-  }
-
-  return 1;
 }

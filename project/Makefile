@@ -5,9 +5,9 @@
 # Time-stamp: <Wed Sep  7 18:01:09 EDT 2016 ferguson>
 #
 
-PROGRAMS = IntSetTest LinkedListTest dfa nfa
+PROGRAMS = IntSetTest LinkedListTest DFAdriver NFAdriver NFA-DFAconverter
 
-CFLAGS = -g
+CFLAGS = -g 
 
 programs: $(PROGRAMS)
 
@@ -15,7 +15,11 @@ IntSetTest: IntSet.o
 
 LinkedListTest: LinkedList.o
 
-nfa: IntSet.o
+NFA-DFAconverter: nfa.o dfa.o IntSet.o
+
+DFAdriver: dfa.o
+
+NFAdriver: nfa.o IntSet.o
 
 clean:
 	-rm $(PROGRAMS) *.o

@@ -1,0 +1,5 @@
+4
+0 Accepting 0 Lambda 0 m 1
+1 Accepting 0 Lambda 0 a 2 m 1
+2 Accepting 0 Lambda 0 n 3 m 1
+3 Accepting 1
