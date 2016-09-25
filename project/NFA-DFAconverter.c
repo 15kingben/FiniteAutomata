@@ -63,7 +63,8 @@ void genNFATransitions(NFA* nfa){
 DFA* convert_NFA_DFA(NFA* nfa, int *newDFASize ){
   int maxDFAStates = int_pow(2, NFA_get_size(nfa));
   printf("maxDFAStates: %d\n", maxDFAStates );
-  IntSet* newStates[maxDFAStates/4]; //I would malloc but IntSet makes it difficult
+  IntSet* newStates[maxDFAStates/4]; //Not the theoretical bound but the limit for stack allocaiton, I would malloc but IntSet makes it too difficult
+
   //newStates = malloc(maxDFAStates * sizeof(struct IntSet));
 
 
@@ -198,26 +199,33 @@ int main(int argc, char** argv){
   printf("Now printing old NFA: \n");
   NFA_print(nfa);
   printf("\nNow printing new DFA\n");
-  //DFA_print(newdfa);
+  DFA_print(newdfa);
 
   printf("Execution on both platforms:\nNFA:\n\n");
 
-  bool result = NFA_execute(nfa, argv[2]);
+  char seq[1000] = "";
+  if(argv[2] == NULL){
+    //seq = "";
+  }else{
+    strcpy(seq, argv[2]);
+  }
+
+  bool result = true;//NFA_execute(nfa, seq);
 
   if(result){
-    printf("\naccept input \"%s\"\n", argv[2]);
+    printf("\naccept input \"%s\"\n", seq);
   }else{
 
-    printf("\nreject input \"%s\"\n", argv[2]);
+    printf("\nreject input \"%s\"\n", seq);
   }
 
   printf("\n\nNow DFA:\n\n");
-  result = DFA_execute(dfa, argv[2]);
+  result = DFA_execute(dfa,seq);
   if(result){
-    printf("\naccept input \"%s\"\n", argv[2]);
+    printf("\naccept input \"%s\"\n", seq);
   }else{
 
-    printf("\nreject input \"%s\"\n", argv[2]);
+    printf("\nreject input \"%s\"\n", seq);
   }
 
   return 1;

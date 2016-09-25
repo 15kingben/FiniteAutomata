@@ -1,3 +1,4 @@
+
 #include "IntSet.h"
 #include "headers.h"
 #include "nfa.h"
@@ -222,9 +223,9 @@ bool NFA_execute(NFA* nfa, char *input){
       return false; //no transition
 
     if(NFA_tracing){
-      printf("\ncurrent states: ");
+      printf("current states: ");
       IntSet_iterate(nfa->current_states, &printState);
-      printf("  |   next states: ");
+      printf("    |   next states");
       IntSet_iterate(globalNextStates, &printState);
     }
 
@@ -234,3 +235,24 @@ bool NFA_execute(NFA* nfa, char *input){
 
   return NFA_is_accepting(nfa);
 }
+
+
+//
+// int main(int argc, char** argv){
+//
+//   char* filename = argv[1];
+//   NFA* nfa = NFA_from_file(filename);
+//   NFA_print(nfa);
+//   //printf("ncheck1\n");
+//
+//   char* seq;
+//   if(argv[2] == NULL){
+//     seq = "";
+//   }else{
+//     strcpy(seq, argv[2]);
+//   }
+//   bool result = NFA_Execute(nfa, seq);
+//
+//
+//
+// }

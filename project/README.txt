@@ -6,7 +6,13 @@ DFA:
 ./dfa <filename> <inputsequence>
 e.g.:  ./dfa EvenOnes.txt 10011010
 
+NFA:
+./nfa <filename> <inputsequence>
+e.g.: ./nfa NFA_washington.txt washh
 
+NFA-DFAconverter:
+./NFA-DFAconverter <filename> <inputsequence>
+e.g.: ./NFA-DFAconverter NFA_EndMan.txt manohman
 
 Notes:
 -The dfas are defined in text files as follows:
@@ -15,4 +21,6 @@ Notes:
 
 -The nfas differ in that they accept any number of Lambda states, do not include the word Transitions to signify the transitions, and accept strings in addition to symbols
 
--If you want to test the empty string, use ""
+-Using the nfa-dfa converter on NFA_washington.txt generates ~26,000 states and takes a long time, but it does work
+
+-NFA_re is a NFA that accepts the regular expression: a|(bc*) as input

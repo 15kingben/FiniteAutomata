@@ -11,7 +11,16 @@ int main(int argc, char **argv) {
   char* filename = argv[1];
   testdfa = DFA_from_file( filename);
   DFA_print(testdfa);
-  printf("Result: %d\n", DFA_execute(testdfa, argv[2]));
+
+
+  char seq[1000] = "";
+  if(argv[2] == NULL){
+    //seq = "";
+  }else{
+    strcpy(seq, argv[2]);
+  }
+
+  printf("Result: %d\n", DFA_execute(testdfa, seq));
   DFA_free(testdfa);
   return 1;
 }

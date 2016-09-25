@@ -11,7 +11,18 @@ int main(int argc, char** argv){
   char* filename = argv[1];
   NFA* nfa = NFA_from_file(filename);
   NFA_print(nfa);
-  bool result = NFA_execute(nfa, argv[2]);
+
+  char seq[1000] = "";
+  if(argv[2] == NULL){
+    //seq = "";
+  }else{
+    strcpy(seq, argv[2]);
+  }
+
+
+  bool result = NFA_execute(nfa, seq);
+
+
 
   if(result){
     printf("\naccept input \"%s\"\n", argv[2]);

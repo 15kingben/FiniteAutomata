@@ -1,0 +1,5 @@
+4
+0 Accepting 0 a 1 b 2
+1 Accepting 1
+2 Accepting 0 c 3
+3 Accepting 1 c 3
