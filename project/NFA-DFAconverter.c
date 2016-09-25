@@ -40,6 +40,26 @@ void containsAccepting(int state){
   }
 }
 
+IntSet*** global_NFATransitions;
+
+void genNFATransitions(NFA* nfa){
+  global_NFATransitions = (IntSet***)malloc(NFA_get_size(nfa)*sizeof(IntSet**));
+  for(int i = 0; i < NFA_get_size(nfa); i++){
+    global_NFATransitions[i] =  (IntSet**)malloc(NFA_NSYMBOLS * sizeof(IntSet*));
+  }
+
+  for(int i = 0; i < NFA_get_size(nfa); i++){
+    for(int j = 0; j < NFA_NSYMBOLS; j++){
+      IntSet* stateTransitions = IntSet_new();
+      IntSet_union(stateTransitions, nfa->states[i].transitions[j]);
+      printf("\nState: %d Symbol %c Transitions: ", i, (char)j);
+      IntSet_print(stateTransitions);
+      global_NFATransitions[i][j] = stateTransitions;
+    }
+  }
+}
+
+
 DFA* convert_NFA_DFA(NFA* nfa, int *newDFASize ){
   int maxDFAStates = int_pow(2, NFA_get_size(nfa));
   printf("maxDFAStates: %d\n", maxDFAStates );
@@ -59,7 +79,7 @@ DFA* convert_NFA_DFA(NFA* nfa, int *newDFASize ){
   while(currentState < nextNewState){
     makeNextStateTransitions(newStates, maxDFAStates, currentState, nfa, dfa, &nextNewState);
     currentState++;
-    //if(DEBUG)
+    if(DEBUG)
       printf("current state: %d, nextNewState: %d\n", currentState, nextNewState);
   }
   *newDFASize = currentState;
@@ -98,24 +118,40 @@ NFA* global_nfa;
 DFA* global_dfa;
 int global_Symbol;
 
+
+
+
+IntSet* global_IntSetdest;
+
+void copyItems(int state){
+  IntSet_add(global_IntSetdest, state);
+}
+
+void IntSet_copy(IntSet* dest, IntSet* src){
+  global_IntSetdest = dest;
+  IntSet_iterate(src, &copyItems);
+}
+
 void makeNextDFAState(int state){
-  IntSet_union(global_nextStateSet, NFA_get_transitions(global_nfa, state, global_Symbol));
+  IntSet_copy(global_nextStateSet, global_NFATransitions[state][global_Symbol]);
+
+  //IntSet_union(global_nextStateSet, NFA_get_transitions(global_nfa, state, global_Symbol));
 }
 
 void makeNextStateTransitions(IntSet* states[], int size, int currentState, NFA* nfa, DFA* dfa, int *nextNewState){
   IntSet* currentStateSet = states[currentState];
-  if(DEBUG){
+//  if(DEBUG){
     printf("DFA State:  %d  corresponds to the NFA States:  ", currentState);
     IntSet_print(currentStateSet);
-  }
+//  }
 
 
   for(int i = 0; i < NFA_NSYMBOLS; i++){
 
     IntSet* nextStateSet = IntSet_new();
     global_nextStateSet = nextStateSet;
-    global_dfa = dfa;
-    global_nfa = nfa;
+    // global_dfa = dfa;
+    // global_nfa = nfa;
     global_Symbol = i;
     IntSet_iterate(currentStateSet, &makeNextDFAState);
 
@@ -123,6 +159,7 @@ void makeNextStateTransitions(IntSet* states[], int size, int currentState, NFA*
       printf("char: %c nextStateSet: ", (char)i);
       IntSet_print(nextStateSet);
     }
+
 
     int dfa_target = findEquivalentState(states, size, nextStateSet, nextNewState);
     if(DEBUG)
@@ -151,7 +188,8 @@ int main(int argc, char** argv){
 
 
   int newDFASize;
-  printf("%lu", sizeof(int));
+
+  genNFATransitions(nfa);
   printf("Summary of Conversion:\n");
   DFA* dfa = convert_NFA_DFA(nfa, &newDFASize);
 
